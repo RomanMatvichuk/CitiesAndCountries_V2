@@ -34,9 +34,9 @@ function dropDownList(id){
 
 function visitCity(id){
     //var ul = document.getElementById("vCities");
-    var div = document.getElementById("s" + id).childNodes[5];
+    var cb = document.getElementById("b_" + id);
     
-    if (div.checked === true){
+    if (cb.checked === true){
         addListItem("vCities", "v_" + id, "s" + id);
     }
     else {
