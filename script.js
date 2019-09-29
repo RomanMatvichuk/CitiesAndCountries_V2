@@ -21,11 +21,6 @@ async function getList() {
     if (localStorage.getItem("visitedCities") !== null){
         visitedCities = JSON.parse(localStorage.getItem("visitedCities"));
     }    
-
-    /* if (localStorage.getItem("metPeople") !== null){
-        metPeople = parseInt(localStorage.getItem("metPeople"));
-        metPeopleRaport();
-    } */
     
     var cities = await JSON.parse(cityData);
     var countries = await JSON.parse(countryData);
@@ -88,15 +83,12 @@ function hideInfo(id){
             }            
         }
     }
-    //checkId = Number(id);
-    //if (isNaN(checkId) === false){
-        for (var i = 1; i < JSON.parse(cityData).length + 1; i++){
-            if (i.toString() !== id){
-                document.getElementById(i).style.display = "none";
-            }            
-        }
-    //}
 
+    for (var i = 1; i < JSON.parse(cityData).length + 1; i++){
+        if (i.toString() !== id){
+            document.getElementById(i).style.display = "none";
+        }            
+    }
 }
 
 function visitCity(id, name){
@@ -151,7 +143,6 @@ function removeChildElement(parentId, childId){
 }
 
 function saveVisitedInfo (){
-    //localStorage.setItem("metPeople", metPeople);
     localStorage.setItem("visitedCities", JSON.stringify(visitedCities));
 }
 
