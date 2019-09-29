@@ -22,10 +22,10 @@ async function getList() {
         visitedCities = JSON.parse(localStorage.getItem("visitedCities"));
     }    
 
-    if (localStorage.getItem("metPeople") !== null){
+    /* if (localStorage.getItem("metPeople") !== null){
         metPeople = parseInt(localStorage.getItem("metPeople"));
         metPeopleRaport();
-    }
+    } */
     
     var cities = await JSON.parse(cityData);
     var countries = await JSON.parse(countryData);
@@ -58,22 +58,45 @@ async function getList() {
             var city = getCityData(visitedCities[i].id);
             document.getElementById("b_" + city.id).checked = true;
             addListItem("vCities", "v_" + city.id, city.stadname + " (" + city.population + " invånare)");
+            metPeople += city.population;
         }
     }
 
     checkVisitedCities();
+    metPeopleRaport();
 }
 
 
 function dropDownList(id){
-    var ul = document.getElementById(id);
+    var element = document.getElementById(id);
     
-    if (ul.style.display === "none"){
-        ul.style.display = "block";
+    if (element.style.display === "none"){
+        element.style.display = "block";
+        hideInfo(id);
     }
     else{
-        ul.style.display = "none";
+        element.style.display = "none";
     }
+}
+
+function hideInfo(id){
+    
+    if (id.charAt(0) === "l"){
+        for (var i = 1; i < JSON.parse(countryData).length + 1; i++){
+            if ("l_" + i.toString() !== id){
+                document.getElementById("l_" + i).style.display = "none";
+            }            
+        }
+    }
+    //checkId = Number(id);
+    //if (isNaN(checkId) === false){
+        for (var i = 1; i < JSON.parse(cityData).length + 1; i++){
+            if (i.toString() !== id){
+                document.getElementById(i).style.display = "none";
+            }            
+        }
+    //}
+
 }
 
 function visitCity(id, name){
@@ -128,7 +151,7 @@ function removeChildElement(parentId, childId){
 }
 
 function saveVisitedInfo (){
-    localStorage.setItem("metPeople", metPeople);
+    //localStorage.setItem("metPeople", metPeople);
     localStorage.setItem("visitedCities", JSON.stringify(visitedCities));
 }
 
