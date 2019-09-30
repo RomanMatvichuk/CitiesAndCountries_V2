@@ -36,6 +36,7 @@ async function getList() {
                 htmlLines += "<li><a href=\"javascript:dropDownList(\'" + cities[j].id + "\');\">" + cities[j].stadname + "</a></li>\n";
                 htmlLines += "<li><div id='" + cities[j].id + "' class='info space' style='display: none'>\n";
                 htmlLines += "<p><strong>" + cities[j].stadname + "</strong></p>\n";
+                htmlLines += "<p><strong>(" + countries[i].countryname + ")</strong></p>\n";
                 htmlLines += "<p>" + cities[j].population + " invånare</p>\n";
                 htmlLines += "<input id=\"b_" + cities[j].id + "\" type=\"checkbox\" value=\"true\" ";
                 htmlLines += "onclick=\"visitCity(" + cities[j].id + ", \'" + cities[j].stadname + " (" + countries[i].countryname + ") " + "\')\">\n"
@@ -118,6 +119,16 @@ function visitCity(id, name){
 
 function getCityData(id){
     var data = JSON.parse(cityData);
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+            var object = {id: data[i].id, stadname: data[i].stadname, countryid: data[i].countryid, population: data[i].population};
+            return object;
+        }
+    }
+}
+
+function getCoutryData(id){
+    var data = JSON.parse(countryData);
     for (var i = 0; i < data.length; i++) {
         if (data[i].id === id) {
             var object = {id: data[i].id, stadname: data[i].stadname, countryid: data[i].countryid, population: data[i].population};
