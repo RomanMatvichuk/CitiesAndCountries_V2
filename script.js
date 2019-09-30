@@ -33,7 +33,7 @@ async function getList() {
         
         for (var j = 0; j < cities.length; j++) {
             if (countries[i].id === cities[j].countryid){
-                htmlLines += "<li><a href=\"javascript:dropDownList(\'" + cities[j].id + "\');\">" + cities[j].stadname + "</a></li>\n";
+                htmlLines += "<li><a id=\"a_" + cities[j].id + "\" href=\"javascript:dropDownList(\'" + cities[j].id + "\');\">" + cities[j].stadname + "</a></li>\n";
                 htmlLines += "<li><div id='" + cities[j].id + "' class='info space' style='display: none'>\n";
                 htmlLines += "<p><strong>" + cities[j].stadname + "</strong></p>\n";
                 htmlLines += "<p><strong>(" + countries[i].countryname + ")</strong></p>\n";
@@ -53,7 +53,8 @@ async function getList() {
         for (var i = 0; i < visitedCities.length; i++){
             var city = getCityData(visitedCities[i].id);
             document.getElementById("b_" + city.id).checked = true;
-            addListItem("vCities", "v_" + city.id, city.stadname + " (" + city.population + " invånare)");
+            document.getElementById("a_" + city.id).innerText += " (besökt)";
+            addListItem("vCities", "v_" + city.id, city.stadname + " (" + getCountryData(city.countryid).countryname + ") (" + city.population + " invånare)");
             metPeople += city.population;
         }
     }
@@ -61,7 +62,6 @@ async function getList() {
     checkVisitedCities();
     metPeopleRaport();
 }
-
 
 function dropDownList(id){
     var element = document.getElementById(id);
@@ -97,12 +97,15 @@ function visitCity(id, name){
     var peopleQty = getCityData(id).population;
     
     if (cb.checked === true){
+        document.getElementById("a_" + id).innerText += " (besökt)";
         addListItem("vCities", "v_" + id, name + " (" + peopleQty + " invånare)");
         metPeople += peopleQty;
         var object = {id: id};
         visitedCities.push(object);        
     }
     else {
+        var str = document.getElementById("a_" + id).innerText
+        document.getElementById("a_" + id).innerText = str.substring(0, str.length - 9);
         removeChildElement("vCities", "v_" + id);
         metPeople -= peopleQty;
         for (var i = 0; i < visitedCities.length; i++){
@@ -127,13 +130,14 @@ function getCityData(id){
     }
 }
 
-function getCoutryData(id){
+function getCountryData(id){
     var data = JSON.parse(countryData);
     for (var i = 0; i < data.length; i++) {
         if (data[i].id === id) {
-            var object = {id: data[i].id, stadname: data[i].stadname, countryid: data[i].countryid, population: data[i].population};
-            return object;
+            var object = {id: data[i].id, countryname: data[i].countryname};
+            return object; 
         }
+        
     }
 }
 
