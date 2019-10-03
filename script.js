@@ -1,10 +1,13 @@
+//Variabler
 var visitedCities = [];
 var metPeople = 0;
 var cityData = "";
 var countryData = "";
 
+//Startas funktionen
 getList();
 
+//Fylls listor med data från Json filer
 async function getList() {
         var cities = await fetch('stad.json')
             .then(response => response.json())
@@ -63,6 +66,7 @@ async function getList() {
     metPeopleRaport();
 }
 
+//Ansvar för att visa och dölja listor
 function dropDownList(id){
     var element = document.getElementById(id);
     
@@ -75,6 +79,7 @@ function dropDownList(id){
     }
 }
 
+//Kontrolerar listor. Bara en lista av städer och stadens detaljer kan vara öppen.
 function hideInfo(id){
     
     if (id.charAt(0) === "l"){
@@ -92,6 +97,7 @@ function hideInfo(id){
     }
 }
 
+//Lägger en stad till listan "Besökta städer"
 function visitCity(id, name){
     var cb = document.getElementById("b_" + id);
     var peopleQty = getCityData(id).population;
@@ -120,6 +126,7 @@ function visitCity(id, name){
     checkVisitedCities();
 }
 
+//Returnerar en stad efter id
 function getCityData(id){
     var data = JSON.parse(cityData);
     for (var i = 0; i < data.length; i++) {
@@ -130,6 +137,7 @@ function getCityData(id){
     }
 }
 
+//Returnerar ett land efter id
 function getCountryData(id){
     var data = JSON.parse(countryData);
     for (var i = 0; i < data.length; i++) {
@@ -141,6 +149,7 @@ function getCountryData(id){
     }
 }
 
+//Lägger till ett listelement till ul
 function addListItem(ulId, liId, text){
     var ul = document.getElementById(ulId);
     var li = document.createElement("li");
@@ -150,6 +159,7 @@ function addListItem(ulId, liId, text){
     sortList();
 }
 
+//Plockar bort ett listelement från ul
 function removeChildElement(parentId, childId){
     var parent = document.getElementById(parentId);
     var child = document.getElementById(childId);
@@ -157,14 +167,17 @@ function removeChildElement(parentId, childId){
     sortList();
 }
 
+//Spara data om besökta städer
 function saveVisitedInfo (){
     localStorage.setItem("visitedCities", JSON.stringify(visitedCities));
 }
 
+//Räknar om människor som man har träffat
 function metPeopleRaport(){
     document.getElementById("metPeople").innerText = "Träffades " + metPeople + " människor";
 }
 
+//Kontrolerar om det finns besökta städer
 function checkVisitedCities(){
     if (visitedCities.length === 0){
         document.getElementById("visited").style.display = "none";
@@ -174,6 +187,7 @@ function checkVisitedCities(){
     }
 }
 
+//Raderas historiken
 function emtyData(){
     localStorage.clear();
     location.reload(true);
