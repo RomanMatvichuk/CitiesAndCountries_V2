@@ -48,7 +48,7 @@ ul li{
   text-decoration: none;
   display: inline-block;
   font-size: 100%;
-  margin: 20px 20px;
+  margin: 20px 10px;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;
@@ -62,7 +62,7 @@ ul li{
 
 #header, #header * {
   background-color: rgb(71, 71, 71);
-  padding: 10px;
+  padding: 5px;
   margin: 0;
   line-height: 40px;
   color: rgb(201, 201, 201);
